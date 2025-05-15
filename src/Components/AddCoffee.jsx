@@ -1,4 +1,5 @@
 import React from 'react';
+import Swal from 'sweetalert2';
 
 const AddCoffee = () => {
 
@@ -10,20 +11,32 @@ const AddCoffee = () => {
         const newCoffee = Object.fromEntries(formData.entries());
         console.log(newCoffee);
 
-    //   coffee add client 
+        //   coffee add client 
 
-    
-      fetch('http://localhost:3000/coffees' ,{
-        method:'POST',
-        headers:{
-            'content-Type':'application/json' 
-        },
-        body: JSON.stringify(newCoffee)
-      })
-      .then(res => res.json())
-      .then(data => {
-        console.log('after coffee added to db',data);
-      })
+
+        fetch('http://localhost:3000/coffees', {
+            method: 'POST',
+            headers: {
+                'content-Type': 'application/json'
+            },
+            body: JSON.stringify(newCoffee)
+        })
+            .then(res => res.json())
+            .then(data => {
+                console.log('after coffee added to db', data);
+
+                if (data.insertedId) {
+                    Swal.fire({
+                        position: "top-end",
+                        icon: "success",
+                        title: "COffee added SuccessFull",
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+
+                    form.reset()
+                }
+            })
     }
 
 
@@ -39,7 +52,7 @@ const AddCoffee = () => {
                             <label className="label text-black">Name</label>
                             <input type="text" name='name' className="input w-full" placeholder="Enter your coffee name" />
                         </fieldset>
-                         <fieldset className="fieldset  border-base-300 rounded-box border p-4">
+                        <fieldset className="fieldset  border-base-300 rounded-box border p-4">
 
                             <label className="label text-black">Quantity</label>
                             <input type="text" name='quantity' className="input w-full" placeholder="enter coffee Quantity" />
@@ -49,31 +62,31 @@ const AddCoffee = () => {
                             <label className="label text-black">Supplier</label>
                             <input type="text" name='supplier' className="input w-full" placeholder="enter coffee supplier" />
                         </fieldset>
-                         <fieldset className="fieldset  border-base-300 rounded-box border p-4">
+                        <fieldset className="fieldset  border-base-300 rounded-box border p-4">
 
                             <label className="text-black label">Taste</label>
                             <input type="text" name='taste' className="input w-full" placeholder="enter coffee taste" />
                         </fieldset>
                         <fieldset className="fieldset  border-base-300 rounded-box border p-4">
 
-                            <label className="label text-black">category</label>
-                            <input type="text" name='category' className="input w-full" placeholder="enter coffee category" />
+                            <label className="label text-black">Price</label>
+                            <input type="text" name='price' className="input w-full" placeholder="enter coffee Price" />
                         </fieldset>
-                       
-                       
+
+
                         <fieldset className="fieldset border-base-300 rounded-box border p-4">
 
                             <label className="label text-black">Details</label>
                             <input type="text" name='details' className="input w-full" placeholder="enter coffee details" />
                         </fieldset>
-                         
+
                     </div>
                     <fieldset className="fieldset border-base-300 rounded-box border my-6 p-4">
 
-                            <label className="label text-black">Photo</label>
-                            <input type="text" name='photo' className="input w-full" placeholder="enter coffee Photo URL" />
-                        </fieldset>
-                        <button type='submit'  className='w-full bg-[#D2B48C] btn'>Add Coffee</button>
+                        <label className="label text-black">Photo</label>
+                        <input type="text" name='photo' className="input w-full" placeholder="enter coffee Photo URL" />
+                    </fieldset>
+                    <button type='submit' className='w-full bg-[#D2B48C] btn'>Add Coffee</button>
                 </form>
             </div>
         </div>
